@@ -9,7 +9,7 @@ import json
 
 os.environ["GEMINI_API_KEY"] = "AIzaSyDTYovbFZD0vm-Du2J6kRO9jrApYrt4hKk"  
 
-os.environ["LITELLM_MODEL"] = "gemini/gemini-pro"
+os.environ["LITELLM_MODEL"] = "gemini/gemini-2.0-flash-exp"
 
 
 class GamblingTools:
