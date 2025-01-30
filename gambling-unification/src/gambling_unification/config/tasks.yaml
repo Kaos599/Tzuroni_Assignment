@@ -1,0 +1,25 @@
+# File: src/gambling_unification/config/tasks.yaml
+data_collection_task:
+  description: >
+    Scrape product data from {sources} while avoiding detection.
+    Focus on price, product name, and confidence metrics.
+  expected_output: >
+    Raw JSON data with minimum 10 products per source
+  agent: data_collector
+
+product_matching_task:
+  description: >
+    Analyze scraped data to identify same products across platforms.
+    Calculate confidence scores using statistical methods.
+  expected_output: >
+    Unified JSON structure with matched products and confidence levels
+  agent: product_analyst
+
+report_generation_task:
+  description: >
+    Generate polished CSV report from unified data.
+    Include price comparisons and confidence metrics.
+  expected_output: >
+    Clean CSV file with standardized product names and cross-platform pricing
+  agent: data_engineer
+  output_file: unified_products.csv
