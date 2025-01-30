@@ -1,4 +1,4 @@
-# File: src/gambling_unification/crew.py
+
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from litellm import completion
@@ -6,8 +6,8 @@ import os
 import logging
 import json
 
-# Configure LiteLLM for Gemini
-os.environ["GEMINI_API_KEY"] = ""  # Make sure to set your Gemini API key
+
+os.environ["GEMINI_API_KEY"] = ""  
 
 os.environ["LITELLM_MODEL"] = "gemini/gemini-pro"
 
