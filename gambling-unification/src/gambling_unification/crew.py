@@ -7,7 +7,7 @@ import logging
 import json
 
 
-os.environ["GEMINI_API_KEY"] = ""  
+os.environ["GEMINI_API_KEY"] = "AIzaSyDTYovbFZD0vm-Du2J6kRO9jrApYrt4hKk"  
 
 os.environ["LITELLM_MODEL"] = "gemini/gemini-pro"
 
