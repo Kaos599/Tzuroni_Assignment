@@ -1,5 +1,5 @@
 # File: src/gambling_unification/main.py
-from gambling_unification.crew import GamblingUnificationCrew
+from src.gambling_unification.crew import GamblingUnificationCrew
 
 def run():
     inputs = {
