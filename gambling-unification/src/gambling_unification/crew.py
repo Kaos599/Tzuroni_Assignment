@@ -4,33 +4,55 @@ from crewai.project import CrewBase, agent, crew, task
 from litellm import completion
 import os
 import logging
+import json
 
-# Configure LiteLLM for Ollama
-os.environ["OLLAMA_API_BASE"] = "http://localhost:11434"
-os.environ["LITELLM_MODEL"] = "ollama/llama3"
+# Configure LiteLLM for Gemini
+os.environ["GEMINI_API_KEY"] = ""  # Make sure to set your Gemini API key
+
+os.environ["LITELLM_MODEL"] = "gemini/gemini-pro"
+
 
 class GamblingTools:
     @staticmethod
     def scrape_polymarket():
         """Mock scraper implementation"""
         return [{"product": "Election 2024", "price": 0.45}]
-    
+
     @staticmethod
     def analyze_products(data):
         """LLM-powered product matching"""
         try:
-            response = completion(
+             response_schema = {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "product": {
+                                "type": "string",
+                            },
+                            "confidence_score": {
+                                "type": "number"
+                                }
+                            },
+                        "required": ["product", "confidence_score"],
+                        },
+                }
+             
+             response = completion(
                 model=os.getenv("LITELLM_MODEL"),
                 messages=[{
                     "role": "user",
-                    "content": f"Analyze these products:\n{data}"
+                    "content": f"Analyze these products:\n{data} and return a json object array with a product and a confidence_score. confidence score should be a value between 0 and 1"
                 }],
-                temperature=0.1
+                temperature=0.1,
+                response_format={"type": "json_object", "response_schema": response_schema}
+                
             )
-            return response.choices[0].message.content
+             return json.loads(response.choices[0].message.content)
         except Exception as e:
             logging.error(f"Analysis failed: {str(e)}")
             return None
+
 
 @CrewBase
 class GamblingUnificationCrew():
@@ -44,7 +66,7 @@ class GamblingUnificationCrew():
             verbose=True
         )
 
-    @agent 
+    @agent
     def product_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['product_analyst'],
